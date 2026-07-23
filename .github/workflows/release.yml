@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version: "1.25"
+
+      - run: go mod download
+
+      - name: Build AMD64
+        run: |
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+          go build -ldflags="-s -w" \
+          -o xorbit-linux-amd64 ./cmd/agent
+
+      - name: Build ARM64
+        run: |
+          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 \
+          go build -ldflags="-s -w" \
+          -o xorbit-linux-arm64 ./cmd/agent
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            xorbit-linux-amd64
+            xorbit-linux-arm64

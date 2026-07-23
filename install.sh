@@ -137,6 +137,8 @@ Wants=network-online.target
 [Service]
 Type=simple
 
+Environment=GIN_MODE=release
+
 ExecStart=${INSTALL_PATH}
 
 Restart=always

@@ -55,4 +55,4 @@ debug
 __debug_bin
 *.generated.go
 
-install.sh
+# install.sh

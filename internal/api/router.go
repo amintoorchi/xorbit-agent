@@ -15,6 +15,7 @@ func RegisterRoutes(router *gin.Engine) {
 		})
 	})
 
+	router.GET("/pair", handlers.Pair)
 	router.GET("/up", handlers.Health)
 	router.GET("/exec/shutdown", handlers.Shutdown)
 	router.GET("/exec/reboot", handlers.Reboot)
